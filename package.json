@@ -1,0 +1,28 @@
+{
+  "name": "giaa",
+  "version": "1.0.0",
+  "description": "Google Indexing API automator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m3m3nto/giaa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m3m3nto/giaa/issues"
+  },
+  "homepage": "https://github.com/m3m3nto/giaa#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "googleapis": "^37.2.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
