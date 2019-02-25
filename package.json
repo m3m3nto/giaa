@@ -4,6 +4,7 @@
   "description": "Google Indexing API automator",
   "scripts": {
     "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

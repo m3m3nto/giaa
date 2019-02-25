@@ -9,6 +9,8 @@ var bodyParser = require('body-parser')
 var config = require('./config/app_' + process.env.NODE_ENV);
 
 var indexRouter = require('./routes/index');
+var account = require("./models/account");
+var account = require("./models/url");
 
 var async = require('async');
 var flash = require('express-flash-2');

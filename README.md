@@ -7,8 +7,9 @@ Google Indexing API automator
   - domains: []
   - client_email
 - urls
-  - request_status_code
-  - request_status_message
+  - location
+  - response_status_code
+  - response_status_message
   - notify_time
 
 ## Installation
