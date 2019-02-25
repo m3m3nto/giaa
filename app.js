@@ -2,25 +2,20 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-//var morgan = require('morgan');
 var mongoose = require('mongoose');
 var url = require('url');
 var bodyParser = require('body-parser')
 var config = require('./config/app_' + process.env.NODE_ENV);
-
 var indexRouter = require('./routes/index');
 var account = require("./models/account");
-var account = require("./models/url");
-
+var url = require("./models/url");
 var async = require('async');
 var flash = require('express-flash-2');
-//var expressValidator = require('express-validator');
 var app = express();
 
 app.locals.env = process.env.NODE_ENV;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');
-//app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -37,7 +32,6 @@ app.use(function (req, res, next) {
 });
 
 //app.use(flash());
-//app.use(expressValidator());
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
