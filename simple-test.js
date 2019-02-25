@@ -28,7 +28,7 @@ jwtClient.authorize(function (err, tokens) {
     },
     // Define contents here. The structure of the content is described in the next step.
     json: {
-      "url": "https://masterdigitale.com",
+      "url": "http://www.alturalabs.com/team/monaco",
       "type": "URL_UPDATED"
     },
   }

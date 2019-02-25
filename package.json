@@ -2,25 +2,30 @@
   "name": "giaa",
   "version": "1.0.0",
   "description": "Google Indexing API automator",
-  "main": "index.js",
   "scripts": {
+    "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/m3m3nto/giaa.git"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/m3m3nto/giaa/issues"
   },
   "homepage": "https://github.com/m3m3nto/giaa#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
+    "express-flash-2": "^1.0.1",
+    "expressjs": "^1.0.1",
     "googleapis": "^37.2.0",
-    "request": "^2.88.0"
+    "mongoose": "^5.4.15",
+    "request": "^2.88.0",
+    "twig": "^1.13.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
