@@ -62,3 +62,4 @@ typings/
 
 # /config/cids directory
 config/cids
+config/client_id
