@@ -1,4 +1,5 @@
 module.exports = {
   'secret':'nobody knows giaa',
-  'database': 'mongodb://localhost:27017/giaa'
+  'database': 'mongodb://localhost:27017/giaa',
+  'api_daily_quota': 51
 };

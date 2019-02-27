@@ -2,7 +2,7 @@ let request = require("request");
 let {google} = require("googleapis");
 let key = require("../config/cids/indexing-230911-29c9139c99ff.json");
 
-module.exports.notify = function notify(url) {
+module.exports.notify = function notify(url, type) {
   return new Promise(function(resolve, reject) {
     const jwtClient = new google.auth.JWT(
       key.client_email,
@@ -29,11 +29,14 @@ module.exports.notify = function notify(url) {
         },
         json: {
           "url": url,
-          "type": "URL_UPDATED"
+          "type": type
         },
       }
 
       request(options, function (error, response, body) {
+        if(error){
+          reject(body);
+        }
         resolve(body);
       });
     });

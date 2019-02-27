@@ -19,3 +19,7 @@ td {
 .nowrap {
   white-space:nowrap;
 }
+
+.red {
+  color: red;
+}
