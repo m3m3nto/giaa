@@ -3,7 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
-var url = require('url');
 var bodyParser = require('body-parser')
 var config = require('./config/app_' + process.env.NODE_ENV);
 var indexRouter = require('./routes/index');

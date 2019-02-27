@@ -11,3 +11,11 @@
 #navbarHeader a {
   color: #fff;
 }
+
+td {
+  font-size: 0.8em;
+}
+
+.nowrap {
+  white-space:nowrap;
+}

@@ -8,15 +8,46 @@
     <div class="container">
       <div class="row">
         <div class="col-12 py-4">
+          <p>Insert single url, or multiple urls one per line.</p>
           <form method="post" action="/">
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Url/urls</label>
               <textarea class="form-control" id="url" name="url" rows="3"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="submit" class="btn btn-primary">Notify</button>
           </form>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-12 py-4">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" class="nowrap">Location</th>
+                <th scope="col" class="nowrap">Res. Code</th>
+                <th scope="col" class="nowrap">Res. Msg</th>
+                <th scope="col" class="nowrap">Not. Time</th>
+                <th scope="col" class="nowrap">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for url in urls %}
+                <tr>
+                  <td>{{loop.index}}</td>
+                  <td>{{url.location}}</td>
+                  <td>{{url.response_status_code}}</td>
+                  <td>{{url.response_status_message}}</td>
+                  <td class="nowrap">{{url.notifytime|date('d-m-Y H:i:s', "Europe/Rome")}}</td>
+                  <td>{{url.status}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </section>
 

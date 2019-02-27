@@ -20,6 +20,7 @@
   "homepage": "https://github.com/m3m3nto/giaa#readme",
   "dependencies": {
     "cookie-parser": "^1.4.4",
+    "cron": "^1.6.0",
     "express": "^4.16.4",
     "express-flash-2": "^1.0.1",
     "expressjs": "^1.0.1",
