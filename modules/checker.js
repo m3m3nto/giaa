@@ -5,9 +5,7 @@ let Url = require("../models/url");
 let validator = require('validator');
 
 module.exports.valid_url = function valid_url(loc, type){
-  if(validator.isURL(loc, {
-    require_protocol: true
-  })){
+  if(validator.isURL(loc, { require_protocol: true })){
     return true;
   }else{
     var notifyUrl = new Url({
@@ -19,6 +17,7 @@ module.exports.valid_url = function valid_url(loc, type){
       status: 'error',
       updatedat: new Date()
     });
+    
     notifyUrl.save(function (err) {
       if (err) return handleError(err);
     });
@@ -31,69 +30,53 @@ module.exports.http_check = function http_check(loc, type) {
     let options = {
       url: loc,
       method: "HEAD",
+      headers: {
+        'User-Agent': 'request'
+      }
     }
     request(options, function (error, response, body) {
-      if(error){
-        reject(response.statusCode);
-      }
-
-      if(response.statusCode == 200 && type == 'URL_UPDATED'){
-        var notifyUrl = new Url({
-          location: loc,
-          type: type,
-          response_status_code: '',
-          response_status_message: '',
-          notifytime: null,
-          status: 'pending',
-          updatedat: new Date()
-        });
-      }else if(response.statusCode == 200 && type == 'URL_REMOVED'){
-        var notifyUrl = new Url({
-          location: loc,
-          type: type,
-          response_status_code: '200',
-          response_status_message: 'Requested URL_REMOVED but url returns 200',
-          notifytime: null,
-          status: 'error',
-          updatedat: new Date()
-        });
-      }else if(response.statusCode == 404 && type == 'URL_REMOVED'){
-        var notifyUrl = new Url({
-          location: loc,
-          type: type,
-          response_status_code: '',
-          response_status_message: '',
-          notifytime: null,
-          status: 'pending',
-          updatedat: new Date()
-        });
-      }else if(response.statusCode == 404 && type == 'URL_UPDATED'){
-        var notifyUrl = new Url({
-          location: loc,
-          type: type,
-          response_status_code: '404',
-          response_status_message: 'Requested URL_UPDATED but url returns 404',
-          notifytime: null,
-          status: 'error',
-          updatedat: new Date()
-        });
-      }else{
-        var notifyUrl = new Url({
-          location: loc,
-          type: type,
-          response_status_code: response.statusCode,
-          response_status_message: '',
-          notifytime: null,
-          status: 'error',
-          updatedat: new Date()
-        });
-      }
-
-      notifyUrl.save(function (err) {
-        if (err) return handleError(err);
+      var notifyUrl = new Url({
+        location: loc,
+        type: type,
+        response_status_code: '',
+        response_status_message: '',
+        notifytime: null,
+        status: '',
+        updatedat: new Date()
       });
 
-      resolve(response.statusCode);
+      if(error || typeof response == 'undefined'){
+        notifyUrl.response_status_code = error.code;
+        notifyUrl.status = 'error';
+        notifyUrl.save(function (err) {
+          if (err) return handleError(err);
+        });
+        reject(error);
+      }else{
+        if(response.statusCode == 200 && type == 'URL_UPDATED'){
+          notifyUrl.status = 'pending';
+        }else if(response.statusCode == 200 && type == 'URL_REMOVED'){
+          notifyUrl.response_status_code = '200';
+          notifyUrl.response_status_message = 'Requested URL_REMOVED but url returns 200';
+          notifyUrl.status = 'error';
+        }else if(response.statusCode == 404 && type == 'URL_REMOVED'){
+          notifyUrl.status = 'pending';
+        }else if(response.statusCode == 404 && type == 'URL_UPDATED'){
+          notifyUrl.response_status_code = '404';
+          notifyUrl.response_status_message = 'Requested URL_UPDATED but url returns 404';
+          notifyUrl.status = 'error';
+        }else{
+          notifyUrl.response_status_code = response.statusCode,
+          notifyUrl.status = 'error';
+        }
+
+        notifyUrl.save(function (err) {
+          if (err) return handleError(err);
+        });
+
+        resolve(response.statusCode);
+      }
+
     });
 
   });
