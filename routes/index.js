@@ -27,13 +27,15 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   locations = req.body.url.split('\n').filter(Boolean);
   locations.forEach(function(loc, index, arr){
-    loc.replace(/(\r\n|\n|\r)/gm, "");
+    loc = loc.replace(/\r?\n|\r/g, "");
 
-    var initializeChecker = checker.http_check(loc, req.body.type);
-    initializeChecker.then(function(result) {
-    }, function(err) {
-      console.log(err);
-    });
+    if(checker.valid_url(loc, req.body.type)){
+      var initializeChecker = checker.http_check(loc, req.body.type);
+      initializeChecker.then(function(result) {
+      }, function(err) {
+        console.log(err);
+      });
+    }
 
   });
 

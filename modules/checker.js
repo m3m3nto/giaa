@@ -2,6 +2,29 @@ let http = require('http');
 let request = require('request');
 let mongoose = require('mongoose');
 let Url = require("../models/url");
+let validator = require('validator');
+
+module.exports.valid_url = function valid_url(loc, type){
+  if(validator.isURL(loc, {
+    require_protocol: true
+  })){
+    return true;
+  }else{
+    var notifyUrl = new Url({
+      location: loc,
+      type: type,
+      response_status_code: '',
+      response_status_message: 'Not a valid URI',
+      notifytime: null,
+      status: 'error',
+      updatedat: new Date()
+    });
+    notifyUrl.save(function (err) {
+      if (err) return handleError(err);
+    });
+    return false;
+  }
+}
 
 module.exports.http_check = function http_check(loc, type) {
   return new Promise(function(resolve, reject) {
@@ -9,7 +32,6 @@ module.exports.http_check = function http_check(loc, type) {
       url: loc,
       method: "HEAD",
     }
-
     request(options, function (error, response, body) {
       if(error){
         reject(response.statusCode);
