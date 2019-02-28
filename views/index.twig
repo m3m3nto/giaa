@@ -26,7 +26,7 @@
             <div class="form-group">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                  <label class="input-group-text" for="inputGroupSelect01">Request Type</label>
                 </div>
                 <select class="custom-select" id="inputGroupSelect01" name="type">
                   <option selected value="URL_UPDATED">URL UPDATED</option>
@@ -51,11 +51,12 @@
                 <th scope="col" class="nowrap">Res. Msg</th>
                 <th scope="col" class="nowrap">Not. Time</th>
                 <th scope="col" class="nowrap">Status</th>
+                <th scope="col" class="nowrap">Updated at</th>
               </tr>
             </thead>
             <tbody>
               {% for url in urls %}
-                {% if url.response_status_code != 200 %}
+                {% if url.status == 'error' %}
                   {% set color='red' %}
                 {% endif %}
                 <tr class="{{color}}">
@@ -70,6 +71,11 @@
                     {% endif %}
                   </td>
                   <td>{{url.status}}</td>
+                  <td class="nowrap">
+                    {% if url.updatedat %}
+                      {{url.updatedat|date('d-m-Y H:i:s', "Europe/Rome")}}
+                    {% endif %}
+                  </td>
                 </tr>
               {% endfor %}
             </tbody>

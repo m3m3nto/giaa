@@ -7,7 +7,8 @@ var UrlSchema = new Schema({
   response_status_code: { type: String },
   response_status_message: { type: String },
   notifytime: { type: Date },
-  status: { type: String }
+  status: { type: String },
+  updatedat: { type: Date }
 });
 
 module.exports = mongoose.model('Url', UrlSchema);
