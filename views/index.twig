@@ -11,7 +11,7 @@
             <div class="form-group">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">Url/urls
+                  <span class="input-group-text" class="igroup">Url/urls
                   [quota:
                   {% if quota <= 0 %}
                     <span class="red">{{quota}}</span>
@@ -26,7 +26,7 @@
             <div class="form-group">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <label class="input-group-text" for="inputGroupSelect01">Request Type</label>
+                  <label class="input-group-text igroup" for="inputGroupSelect01">Request Type</label>
                 </div>
                 <select class="custom-select" id="inputGroupSelect01" name="type">
                   <option selected value="URL_UPDATED">URL UPDATED</option>
@@ -41,7 +41,7 @@
 
       <div class="row">
         <div class="col-12 py-4">
-          <table class="table table-striped table-bordered">
+          <table class="table table-striped table-bordered table-responsive">
             <thead class="thead-light">
               <tr>
                 <th scope="col">#</th>
@@ -54,12 +54,12 @@
                 <th scope="col" class="nowrap">Updated at</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="incr">
               {% for url in urls %}
                 {% if url.status == 'error' %}
-                  {% set color='red' %}
+                  {% set color = 'red' %}
                 {% endif %}
-                <tr class="{{color}}">
+                <tr class="{{color}}" id="{{url.id}}">
                   <td>{{url.id}}</td>
                   <td>{{url.location}}</td>
                   <td>{{url.type}}</td>

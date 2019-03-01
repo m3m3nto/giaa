@@ -5,6 +5,7 @@ let indexer = require('./modules/indexer');
 let utils = require('./modules/utils');
 mongoose.connect(config.database, {useNewUrlParser: true});
 let CronJob = require('cron').CronJob;
+let io = require('socket.io-client');
 
 console.log('Starting indexer service...');
 new CronJob('*/5 * * * * *', function() {
@@ -29,7 +30,7 @@ new CronJob('*/5 * * * * *', function() {
               url.response_status_code = urlDetails.error.code;
               url.response_status_message = urlDetails.error.message;
               url.notifytime = new Date();
-              url.status = 'updated';
+              url.status = 'error';
               url.updatedat = new Date();
             }else{
               url.response_status_code = '200';
@@ -41,6 +42,12 @@ new CronJob('*/5 * * * * *', function() {
 
             url.save(function (err) {
               if (err) return handleError(err);
+              var client = io.connect( "http://localhost:3000");
+              client.once("connect", function () {
+                client.emit('updatedUrl', url, function(){
+                  client.disconnect();
+                });
+              });
             });
 
           }, function(err) {

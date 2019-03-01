@@ -1,16 +1,24 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser')
-var config = require('./config/app_' + process.env.NODE_ENV);
-var indexRouter = require('./routes/index');
-var account = require("./models/account");
-var url = require("./models/url");
-var async = require('async');
-var flash = require('express-flash-2');
-var app = express();
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let mongoose = require('mongoose');
+let bodyParser = require('body-parser')
+let config = require('./config/app_' + process.env.NODE_ENV);
+let indexRouter = require('./routes/index');
+let account = require("./models/account");
+let url = require("./models/url");
+let async = require('async');
+let flash = require('express-flash-2');
+let app = express();
+let server = require('http').Server(app);
+let io = require('socket.io')(server);
+
+io.sockets.on("connection",function (socket) {
+  socket.on( "updatedUrl", function (url, callback) {
+    io.emit("updateUrl", url);
+  });
+});
 
 app.locals.env = process.env.NODE_ENV;
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +38,11 @@ app.use(function (req, res, next) {
    next();
 });
 
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
+
 app.use(indexRouter);
 
 // catch 404 and forward to error handler
@@ -39,13 +52,11 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
 });
 
-module.exports = app;
+module.exports = { app: app, server: server };

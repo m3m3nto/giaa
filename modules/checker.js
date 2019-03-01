@@ -52,7 +52,7 @@ module.exports.http_check = function http_check(loc, type) {
         notifyUrl.save(function (err) {
           if (err) return handleError(err);
         });
-        reject(error);
+        reject(notifyUrl);
       }else{
         if(response.statusCode == 200 && type == 'URL_UPDATED'){
           notifyUrl.status = 'pending';
@@ -77,8 +77,7 @@ module.exports.http_check = function http_check(loc, type) {
         notifyUrl.save(function (err) {
           if (err) return handleError(err);
         });
-
-        resolve(response.statusCode);
+        resolve(notifyUrl);
       }
 
     });
