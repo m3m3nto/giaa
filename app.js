@@ -15,7 +15,7 @@ let server = require('http').Server(app);
 let io = require('socket.io')(server);
 
 io.sockets.on("connection",function (socket) {
-  socket.on( "updatedUrl", function (url, callback) {
+  socket.on("updatedUrl", function (url, callback) {
     io.emit("updateUrl", url);
   });
 });

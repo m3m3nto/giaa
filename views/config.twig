@@ -1,0 +1,26 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+  <section id="welcome">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 py-4">
+          <p>Insert your configuration account/s.</p>
+          <form method="post" action="/config">
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" class="igroup">Domains (one per line)</span>
+                </div>
+                <textarea class="form-control" id="url" name="url" rows="3"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

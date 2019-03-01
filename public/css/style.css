@@ -20,7 +20,8 @@ td {
   white-space:nowrap;
 }
 
-.red {
+.red,
+.error {
   color: red;
 }
 

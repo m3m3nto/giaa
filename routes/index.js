@@ -47,14 +47,21 @@ router.post('/', function(req, res, next) {
     if(checker.valid_url(loc, req.body.type)){
       var initializeChecker = checker.http_check(loc, req.body.type);
       initializeChecker.then(function(result) {
+        //res.io.emit('updateUrl', result);
       }, function(err) {
-        console.log(err);
+        res.io.emit('updateUrl', err);
       });
     }
 
   });
 
   res.redirect('/1');
+});
+
+router.get('/config', function(req, res, next) {
+  res.render('config', {
+      title: 'Giaa Configuration'
+  })
 });
 
 module.exports = router;

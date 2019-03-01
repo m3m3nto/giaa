@@ -50,17 +50,17 @@ module.exports.http_check = function http_check(loc, type) {
         notifyUrl.response_status_code = error.code;
         notifyUrl.status = 'error';
         notifyUrl.save(function (err) {
+          reject(notifyUrl);
           if (err) return handleError(err);
         });
-        reject(notifyUrl);
       }else{
         if(response.statusCode == 200 && type == 'URL_UPDATED'){
           notifyUrl.status = 'pending';
-        }else if(response.statusCode == 200 && type == 'URL_REMOVED'){
+        }else if(response.statusCode == 200 && type == 'URL_DELETED'){
           notifyUrl.response_status_code = response.statusCode;
-          notifyUrl.response_status_message = 'Requested URL_REMOVED but url returns 200';
+          notifyUrl.response_status_message = 'Requested URL_DELETED but url returns 200';
           notifyUrl.status = 'error';
-        }else if((response.statusCode == 404 || response.statusCode == 410) && type == 'URL_REMOVED'){
+        }else if((response.statusCode == 404 || response.statusCode == 410) && type == 'URL_DELETED'){
           notifyUrl.status = 'pending';
         }else if((response.statusCode == 404 || response.statusCode == 410) && type == 'URL_UPDATED'){
           notifyUrl.response_status_code = response.statusCode;

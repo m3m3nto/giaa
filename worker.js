@@ -34,8 +34,13 @@ new CronJob('*/5 * * * * *', function() {
               url.updatedat = new Date();
             }else{
               url.response_status_code = '200';
-              url.response_status_message = urlDetails.urlNotificationMetadata.latestUpdate.type;
-              url.notifytime = urlDetails.urlNotificationMetadata.latestUpdate.notifyTime;
+              if(url.type == 'URL_DELETED'){
+                url.response_status_message = urlDetails.urlNotificationMetadata.latestRemove.type;
+                url.notifytime = urlDetails.urlNotificationMetadata.latestRemove.notifyTime;
+              }else{
+                url.response_status_message = urlDetails.urlNotificationMetadata.latestUpdate.type;
+                url.notifytime = urlDetails.urlNotificationMetadata.latestUpdate.notifyTime;
+              }
               url.status = 'updated';
               url.updatedat = new Date();
             }
