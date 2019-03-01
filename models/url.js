@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var AutoIncrement = require('mongoose-sequence')(mongoose);
 var Schema = mongoose.Schema;
 
 var UrlSchema = new Schema({
@@ -11,4 +12,5 @@ var UrlSchema = new Schema({
   updatedat: { type: Date }
 });
 
+UrlSchema.plugin(AutoIncrement, {inc_field: 'id'});
 module.exports = mongoose.model('Url', UrlSchema);

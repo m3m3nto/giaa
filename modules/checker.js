@@ -17,7 +17,7 @@ module.exports.valid_url = function valid_url(loc, type){
       status: 'error',
       updatedat: new Date()
     });
-    
+
     notifyUrl.save(function (err) {
       if (err) return handleError(err);
     });
@@ -30,6 +30,7 @@ module.exports.http_check = function http_check(loc, type) {
     let options = {
       url: loc,
       method: "HEAD",
+      followRedirect: false,
       headers: {
         'User-Agent': 'request'
       }
@@ -56,15 +57,18 @@ module.exports.http_check = function http_check(loc, type) {
         if(response.statusCode == 200 && type == 'URL_UPDATED'){
           notifyUrl.status = 'pending';
         }else if(response.statusCode == 200 && type == 'URL_REMOVED'){
-          notifyUrl.response_status_code = '200';
+          notifyUrl.response_status_code = response.statusCode;
           notifyUrl.response_status_message = 'Requested URL_REMOVED but url returns 200';
           notifyUrl.status = 'error';
-        }else if(response.statusCode == 404 && type == 'URL_REMOVED'){
+        }else if((response.statusCode == 404 || response.statusCode == 410) && type == 'URL_REMOVED'){
           notifyUrl.status = 'pending';
-        }else if(response.statusCode == 404 && type == 'URL_UPDATED'){
-          notifyUrl.response_status_code = '404';
+        }else if((response.statusCode == 404 || response.statusCode == 410) && type == 'URL_UPDATED'){
+          notifyUrl.response_status_code = response.statusCode;
           notifyUrl.response_status_message = 'Requested URL_UPDATED but url returns 404';
           notifyUrl.status = 'error';
+        }else if(response.statusCode == 301 || response.statusCode == 302){
+          notifyUrl.location = response.headers.location;
+          notifyUrl.status = 'pending';
         }else{
           notifyUrl.response_status_code = response.statusCode,
           notifyUrl.status = 'error';

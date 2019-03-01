@@ -1,0 +1,63 @@
+{% spaceless %}
+  {% if lastPage > 1 %}
+    {% set extremePagesLimit = 3 %}
+    {% set nearbyPagesLimit = 2 %}
+    {% if showAlwaysFirstAndLast is not defined %}{% set showAlwaysFirstAndLast = true %}{% endif %}
+
+    <nav aria-label="Giaa navigation">
+      <ul class="pagination justify-content-center">
+        {% if currentPage > 1 %}
+          <li class="page-item">
+            <a class="page-link" href="{{ currentPage - 1 }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% for i in range(1, extremePagesLimit) if ( i < currentPage - nearbyPagesLimit ) %}
+            <li class="page-item"><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+          {% endfor %}
+          {% if extremePagesLimit + 1 < currentPage - nearbyPagesLimit %}
+            <span class="sep-dots"><a class="page-link">...</a></span>
+          {% endif %}
+          {% for i in range(currentPage-nearbyPagesLimit, currentPage - 1) if ( i > 0 ) %}
+            <li class="page-item"><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+          {% endfor %}
+        {% elseif showAlwaysFirstAndLast %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+        {% endif %}
+
+        <li class="page-item active"><a class="page-link" href="{{ currentPage }}">{{ currentPage }}</a></li>
+
+        {% if currentPage < lastPage %}
+          {% for i in range(currentPage + 1, currentPage + nearbyPagesLimit) if ( i <= lastPage ) %}
+            <li class="page-item"><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+          {% endfor %}
+          {% if (lastPage - extremePagesLimit) > (currentPage + nearbyPagesLimit) %}
+            <span class="sep-dots"><a class="page-link">...</a></span>
+          {% endif %}
+          {% for i in range(lastPage - extremePagesLimit + 1, lastPage) if ( i > currentPage + nearbyPagesLimit ) %}
+            <li class="page-item"><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+          {% endfor %}
+          <li class="page-item">
+            <a class="page-link" href="{{ currentPage + 1 }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        {% elseif showAlwaysFirstAndLast %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endspaceless %}

@@ -8,17 +8,32 @@ let utils = require('../modules/utils');
 let router = express.Router();
 
 router.get('/', function(req, res, next) {
-  var urls = Url.find().sort({ updatedat: -1 });
+  res.redirect('/1');
+});
+
+router.get('/:page', function(req, res, next) {
+  var perPage = 20;
+  if(req.params.page == 0){
+    res.redirect('/1');
+  }
+  var page = req.params.page || 1;
+
+  var urls = Url.find().skip((perPage * page) - perPage).limit(perPage).sort({ id: -1 });
   urls.exec(function (err, urls) {
     if (err) return handleError(err);
 
     utils.remainingUrls(function(err, count){
       var count = config.api_daily_quota - count;
-      res.render('index', {
-        title: 'Giaa: Google Indexing API Automator',
-        urls: urls,
-        quota: count
-      });
+      Url.countDocuments().exec(function(err, pagecount) {
+        if (err) return next(err)
+        res.render('index', {
+            title: 'Giaa: Google Indexing API Automator',
+            urls: urls,
+            quota: count,
+            current: page,
+            pages: Math.ceil(pagecount / perPage)
+        })
+      })
     });
 
   });
@@ -39,7 +54,7 @@ router.post('/', function(req, res, next) {
 
   });
 
-  res.redirect('/');
+  res.redirect('/1');
 });
 
 module.exports = router;

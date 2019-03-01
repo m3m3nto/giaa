@@ -60,7 +60,7 @@
                   {% set color='red' %}
                 {% endif %}
                 <tr class="{{color}}">
-                  <td>{{loop.index}}</td>
+                  <td>{{url.id}}</td>
                   <td>{{url.location}}</td>
                   <td>{{url.type}}</td>
                   <td>{{url.response_status_code}}</td>
@@ -80,6 +80,7 @@
               {% endfor %}
             </tbody>
           </table>
+          {% include 'partials/pagination.twig' with { currentPage: current, lastPage: pages } %}
         </div>
       </div>
 

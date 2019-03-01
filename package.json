@@ -26,7 +26,9 @@
     "expressjs": "^1.0.1",
     "googleapis": "^37.2.0",
     "mongoose": "^5.4.15",
+    "mongoose-sequence": "^5.0.1",
     "request": "^2.88.0",
+    "socket.io": "^2.2.0",
     "twig": "^1.13.2",
     "validator": "^10.11.0"
   },
