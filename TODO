@@ -1,4 +1,4 @@
 - / filters (by status, by req type, by resp. code, by domain)
 - /config add config file association by domain
 - / add request error for domains not listed in /conf
- 
+- / urls add via csv 

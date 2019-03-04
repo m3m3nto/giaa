@@ -7,15 +7,32 @@ Google Indexing API automator
   - domains: []
   - client_email
 - urls
-  - location
-  - response_status_code
-  - response_status_message
-  - notify_time
+  - location: { type: String },
+  - type: { type: String },
+  - response_status_code: { type: String },
+  - response_status_message: { type: String },
+  - notifytime: { type: Date },
+  - status: { type: String },
+  - updatedat: { type: Date }
 
 ## Installation
 
-- npm install
+#### Linux or Mac OSX
+- node installation
+- mongodb installation
+- npm install within project dir
 
-## Setup
+#### Windows
+- node installation
+- mongodb installation
+- npm install within project dir
 
 ## Startup application
+
+#### Linux or Mac OSX
+Within project dir:
+```sh
+$ NODE_ENV npm start
+```
+
+#### Windows
