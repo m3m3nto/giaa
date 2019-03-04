@@ -41,7 +41,7 @@ module.exports.http_check = function http_check(loc, type) {
         type: type,
         response_status_code: '',
         response_status_message: '',
-        notifytime: null,
+        notifytime: '',
         status: '',
         updatedat: new Date()
       });
@@ -75,9 +75,9 @@ module.exports.http_check = function http_check(loc, type) {
         }
 
         notifyUrl.save(function (err) {
+          resolve(notifyUrl);
           if (err) return handleError(err);
         });
-        resolve(notifyUrl);
       }
 
     });

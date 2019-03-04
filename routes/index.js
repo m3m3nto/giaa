@@ -42,12 +42,12 @@ router.get('/:page', function(req, res, next) {
 router.post('/', function(req, res, next) {
   locations = req.body.url.split('\n').filter(Boolean);
   locations.forEach(function(loc, index, arr){
-    loc = loc.replace(/\r?\n|\r/g, "");
+    loc = loc.replace(/\r?\n|\r/g, "").trim();
 
     if(checker.valid_url(loc, req.body.type)){
       var initializeChecker = checker.http_check(loc, req.body.type);
       initializeChecker.then(function(result) {
-        //res.io.emit('updateUrl', result);
+        res.io.emit('updateUrl', result);
       }, function(err) {
         res.io.emit('updateUrl', err);
       });
