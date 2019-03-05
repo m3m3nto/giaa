@@ -9,11 +9,24 @@
           <p>Insert your configuration account/s.</p>
           <form method="post" action="/config">
             <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text igroup-exp" for="inputGroupSelect01">Certificates files</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" name="cif">
+                  <option></option>
+                  {% for cid in cids %}
+                    <option value="{{ cid }}">{{ cid }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" class="igroup">Domains (one per line)</span>
+                  <span class="input-group-text igroup-exp" class="igroup">Domains (one per line)</span>
                 </div>
-                <textarea class="form-control" id="url" name="url" rows="3"></textarea>
+                <textarea class="form-control" id="domains" name="domains" rows="3"></textarea>
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>

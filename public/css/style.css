@@ -26,5 +26,9 @@ td {
 }
 
 .igroup {
-  width: 150px;
+  width: 160px;
+}
+
+.igroup-exp {
+  width: 200px;
 }

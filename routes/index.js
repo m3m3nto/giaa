@@ -2,19 +2,20 @@ let mongoose = require('mongoose');
 let config = require('../config/app_' + process.env.NODE_ENV);
 let express = require('express');
 let Url = require("../models/url");
+let Account = require("../models/account");
 let indexer = require('../modules/indexer');
 let checker = require('../modules/checker');
 let utils = require('../modules/utils');
 let router = express.Router();
 
 router.get('/', function(req, res, next) {
-  res.redirect('/1');
+  res.redirect('/request/1');
 });
 
-router.get('/:page', function(req, res, next) {
+router.get('/request/:page', function(req, res, next) {
   var perPage = 20;
-  if(req.params.page == 0){
-    res.redirect('/1');
+  if(req.params.page == 0 || isNaN(req.params.page)){
+    res.redirect('/request/1');
   }
   var page = req.params.page || 1;
 
@@ -36,7 +37,7 @@ router.get('/:page', function(req, res, next) {
       (typeof req.query.domain !== 'undefined' && req.query.domain !== '') ? pagination.where({ location: { $regex: '^' + req.query.domain } }) : null;
 
       pagination.countDocuments().exec(function(err, pagecount) {
-        if (err) return next(err)
+        if (err) return next(err);
         res.render('index', {
             title: 'Giaa: Google Indexing API Automator',
             urls: urls,
@@ -51,7 +52,7 @@ router.get('/:page', function(req, res, next) {
   });
 });
 
-router.post('/', function(req, res, next) {
+router.post('/request', function(req, res, next) {
   locations = req.body.url.split('\n').filter(Boolean);
   locations.forEach(function(loc, index, arr){
     loc = loc.replace(/\r?\n|\r/g, "").trim();
@@ -71,9 +72,37 @@ router.post('/', function(req, res, next) {
 });
 
 router.get('/config', function(req, res, next) {
-  res.render('config', {
-      title: 'Giaa Configuration'
-  })
+  var dir = './' + config.cids_dir;
+  var fs = require('fs');
+
+  var cids = [];
+  fs.readdirSync(dir).forEach(function(file, index, arr){
+    cids[index] = file;
+  });
+
+  var accounts = Account.find();
+  accounts.exec(function(err, accounts){
+    if (err) return next(err);
+    res.render('config', {
+      title: 'Giaa Configuration',
+      cids: cids,
+      accounts: accounts
+    })
+  });
+});
+
+router.post('/config', function(req, res, next) {
+  var domains = req.body.domains.split('\n').filter(Boolean);
+  var account = new Account({
+    cif: req.body.cif,
+    domains: { ...domains }
+  });
+
+  account.save(function (err) {
+    if (err) return handleError(err);
+  });
+
+  res.redirect('/config');
 });
 
 module.exports = router;

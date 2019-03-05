@@ -2,10 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var AccountSchema = new Schema({
-  id: {
-    type: Number,
-    required: true
-  },
   cif: {
     type: String,
     required: true

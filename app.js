@@ -6,8 +6,6 @@ let mongoose = require('mongoose');
 let bodyParser = require('body-parser')
 let config = require('./config/app_' + process.env.NODE_ENV);
 let indexRouter = require('./routes/index');
-let account = require("./models/account");
-let url = require("./models/url");
 let async = require('async');
 let flash = require('express-flash-2');
 let app = express();
@@ -43,7 +41,7 @@ app.use(function(req, res, next){
   next();
 });
 
-app.use(indexRouter);
+app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
