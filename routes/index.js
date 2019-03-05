@@ -19,19 +19,31 @@ router.get('/:page', function(req, res, next) {
   var page = req.params.page || 1;
 
   var urls = Url.find().skip((perPage * page) - perPage).limit(perPage).sort({ id: -1 });
+  (typeof req.query.type !== 'undefined' && req.query.type !== '' )? urls.where({ type: req.query.type }) : null;
+  (typeof req.query.status !== 'undefined' && req.query.status !== '') ? urls.where({ status: req.query.status }) : null;
+  (typeof req.query.code !== 'undefined' && req.query.code !== '') ? urls.where({ response_status_code: { $regex: '^' + req.query.code } }) : null;
+  (typeof req.query.domain !== 'undefined' && req.query.domain !== '') ? urls.where({ location: { $regex: '^' + req.query.domain } }) : null;
   urls.exec(function (err, urls) {
     if (err) return handleError(err);
 
     utils.remainingUrls(function(err, count){
       var count = config.api_daily_quota - count;
-      Url.countDocuments().exec(function(err, pagecount) {
+      var pagination = Url.countDocuments();
+
+      (typeof req.query.type !== 'undefined' && req.query.type !== '' )? pagination.where({ type: req.query.type }) : null;
+      (typeof req.query.status !== 'undefined' && req.query.status !== '') ? pagination.where({ status: req.query.status }) : null;
+      (typeof req.query.code !== 'undefined' && req.query.code !== '') ? pagination.where({ response_status_code: { $regex: '^' + req.query.code } }) : null;
+      (typeof req.query.domain !== 'undefined' && req.query.domain !== '') ? pagination.where({ location: { $regex: '^' + req.query.domain } }) : null;
+
+      pagination.countDocuments().exec(function(err, pagecount) {
         if (err) return next(err)
         res.render('index', {
             title: 'Giaa: Google Indexing API Automator',
             urls: urls,
             quota: count,
             current: page,
-            pages: Math.ceil(pagecount / perPage)
+            pages: Math.ceil(pagecount / perPage),
+            params: req.query
         })
       })
     });

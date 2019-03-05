@@ -41,6 +41,81 @@
 
       <div class="row">
         <div class="col-12 py-4">
+          <form method="get" action="/{{current}}">
+            <div class="form-group form-inline">
+              <div class="input-group mr-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Type</label>
+                </div>
+                <select class="custom-select" name="type">
+                  <option></option>
+                  {% if params.type == 'URL_UPDATED' %}
+                    <option value="URL_UPDATED" selected="select">URL UPDATED</option>
+                  {% else %}
+                    <option value="URL_UPDATED">URL UPDATED</option>
+                  {% endif %}
+                  {% if params.type == 'URL_DELETED' %}
+                    <option value="URL_DELETED" selected="select">URL DELETED</option>
+                  {% else %}
+                    <option value="URL_DELETED">URL DELETED</option>
+                  {% endif %}
+                </select>
+              </div>
+              <div class="input-group mr-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" >Status</label>
+                </div>
+                <select class="custom-select" name="status">
+                  <option></option>
+                  {% if params.status == 'updated' %}
+                    <option value="updated" selected="selected">updated</option>
+                  {% else %}
+                    <option value="updated">updated</option>
+                  {% endif %}
+                  {% if params.status == 'error' %}
+                    <option value="error" selected="selected">error</option>
+                  {% else %}
+                    <option value="error">error</option>
+                  {% endif %}
+                  {% if params.status == 'pending' %}
+                    <option value="pending" selected="selected">pending</option>
+                  {% else %}
+                    <option value="pending">pending</option>
+                  {% endif %}
+                </select>
+              </div>
+              <div class="input-group mr-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Resp. Code</label>
+                </div>
+                <select class="custom-select" name="code">
+                  <option></option>
+                  {% if params.code == '2' %}
+                    <option value="2" selected="selected">2xx</option>
+                  {% else %}
+                    <option value="2">2xx</option>
+                  {% endif %}
+                  {% if params.code == '4' %}
+                    <option value="4" selected="selected">4xx</option>
+                  {% else %}
+                    <option value="4">4xx</option>
+                  {% endif %}
+                  {% if params.code == '5' %}
+                    <option value="5" selected="selected">5xx</option>
+                  {% else %}
+                    <option value="5">5xx</option>
+                  {% endif %}
+                </select>
+              </div>
+              <div class="input-group mr-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Domain/Url</label>
+                </div>
+                <input type="text" class="form-control" name="domain" value="{{ params.domain }}">
+              </div>
+              <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+          </form>
           <table class="table table-striped table-bordered table-responsive-xl">
             <thead class="thead-light">
               <tr>
@@ -80,7 +155,7 @@
               {% endfor %}
             </tbody>
           </table>
-          {% include 'partials/pagination.twig' with { currentPage: current, lastPage: pages } %}
+          {% include 'partials/pagination.twig' with { currentPage: current, lastPage: pages, querystring: '?type=' ~ params.type ~ '&status=' ~ params.status ~ '&code=' ~ params.code ~ '&domain=' ~ params.domain } %}
         </div>
       </div>
 
