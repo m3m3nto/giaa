@@ -4,7 +4,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser')
-let config = require('./config/app_' + process.env.NODE_ENV);
+let config = require('./config/app.js');
 let indexRouter = require('./routes/index');
 let async = require('async');
 let flash = require('express-flash-2');
@@ -18,7 +18,6 @@ io.sockets.on("connection",function (socket) {
   });
 });
 
-app.locals.env = process.env.NODE_ENV;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');
 app.use(express.json());
@@ -28,13 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect(config.database, {useNewUrlParser: true});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(function (req, res, next) {
-   res.locals = {
-     env: process.env.NODE_ENV
-   };
-   next();
-});
 
 app.use(function(req, res, next){
   res.io = io;

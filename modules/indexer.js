@@ -1,6 +1,6 @@
 let request = require("request");
 let {google} = require("googleapis");
-let config = require('../config/app_' + process.env.NODE_ENV);
+let config = require('../config/app.js');
 
 module.exports.notify = function notify(url, type, keyfile) {
   var dir = './' + config.cids_dir;

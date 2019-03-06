@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-let config = require('../config/app_' + process.env.NODE_ENV);
+let config = require('../config/app.js');
 let express = require('express');
 let Url = require("../models/url");
 let Account = require("../models/account");

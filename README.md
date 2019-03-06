@@ -38,7 +38,7 @@ $ NODE_ENV=dev npm start
 ## Giaa basic configuration
 - Complete the Indexing API prerequisites: https://developers.google.com/search/apis/indexing-api/v3/prereqs
 - Create config/cids directory
-- Download one o more public/private key pair file/files and copy it/them into config/cids
+- Download one or more public/private key pair file/files and copy it/them into config/cids
 - Go to http://localhost:3000/config
 - Pair your GSC property/ies to specific public/private key pair file
 
