@@ -6,6 +6,7 @@ let Account = require("../models/account");
 let indexer = require('../modules/indexer');
 let checker = require('../modules/checker');
 let utils = require('../modules/utils');
+var parse = require('url-parse')
 let router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -55,20 +56,23 @@ router.get('/request/:page', function(req, res, next) {
 router.post('/request', function(req, res, next) {
   locations = req.body.url.split('\n').filter(Boolean);
   locations.forEach(function(loc, index, arr){
-    loc = loc.replace(/\r?\n|\r/g, "").trim();
-
-    if(checker.valid_url(loc, req.body.type)){
-      var initializeChecker = checker.http_check(loc, req.body.type);
-      initializeChecker.then(function(result) {
-        res.io.emit('updateUrl', result);
-      }, function(err) {
-        res.io.emit('updateUrl', err);
-      });
-    }
-
+    var loc = loc.replace(/\r?\n|\r/g, "").trim();
+    var urlValidator = checker.valid_url(loc, req.body.type)
+    urlValidator.then(function(result) {
+      if(result){
+        var initializeChecker = checker.http_check(loc, req.body.type);
+        initializeChecker.then(function(result) {
+          res.io.emit('updateUrl', result);
+        }, function(err) {
+          res.io.emit('updateUrl', err);
+        });
+      }
+    }, function(err) {
+      res.io.emit('updateUrl', err);
+    });
   });
 
-  res.redirect('/1');
+  res.redirect('/request/1');
 });
 
 router.get('/config', function(req, res, next) {
@@ -92,17 +96,23 @@ router.get('/config', function(req, res, next) {
 });
 
 router.post('/config', function(req, res, next) {
-  var domains = req.body.domains.split('\n').filter(Boolean);
   var account = new Account({
     cif: req.body.cif,
-    domains: { ...domains }
+    domain: req.body.domain
   });
 
   account.save(function (err) {
     if (err) return handleError(err);
   });
-
   res.redirect('/config');
+});
+
+router.get('/config/remove', function(req, res, next) {
+  Account.deleteOne({ _id: req.query._id }, function (err) {
+    if (err) return handleError(err);
+    res.redirect('/config');
+  });
+
 });
 
 module.exports = router;

@@ -2,27 +2,35 @@ let http = require('http');
 let request = require('request');
 let mongoose = require('mongoose');
 let Url = require("../models/url");
+let Account = require("../models/account");
 let validator = require('validator');
+var parse = require('url-parse');
 
 module.exports.valid_url = function valid_url(loc, type){
-  if(validator.isURL(loc, { require_protocol: true })){
-    return true;
-  }else{
+  return new Promise(function(resolve, reject) {
     var notifyUrl = new Url({
       location: loc,
       type: type,
       response_status_code: '',
-      response_status_message: 'Not a valid URI',
+      response_status_message: '',
       notifytime: null,
       status: 'error',
       updatedat: new Date()
     });
 
-    notifyUrl.save(function (err) {
-      if (err) return handleError(err);
+    var purl = parse(loc, true);
+    account = Account.findOne({domain: purl.protocol + '//' + purl.hostname}).exec(function (err, account) {
+      if(account){
+        resolve(account.cif);
+      }else{
+        notifyUrl.response_status_message = 'GSC url property not found';
+        notifyUrl.save(function (err) {
+          reject(notifyUrl);
+          if (err) return handleError(err);
+        });
+      }
     });
-    return false;
-  }
+  });
 }
 
 module.exports.http_check = function http_check(loc, type) {

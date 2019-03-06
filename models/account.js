@@ -6,9 +6,10 @@ var AccountSchema = new Schema({
     type: String,
     required: true
   },
-  domains: [{
-    name: String
-  }],
+  domain: {
+    type: String,
+    required: true
+  },
 });
 
 module.exports = mongoose.model('Account', AccountSchema);

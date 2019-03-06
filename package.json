@@ -32,6 +32,7 @@
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "twig": "^1.13.2",
+    "url-parse": "^1.4.4",
     "validator": "^10.11.0"
   },
   "devDependencies": {

@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-12 py-4">
           <p>Insert single url, or multiple urls one per line.</p>
-          <form method="post" action="/">
+          <form method="post" action="/request">
             <div class="form-group">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -34,16 +34,16 @@
                 </select>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Notify</button>
+            <button type="submit" class="btn btn-primary">Notify Url/s</button>
           </form>
         </div>
       </div>
-
+      <hr>
       <div class="row">
         <div class="col-12 py-4">
           <form method="get" action="/request/1">
             <div class="form-group form-inline">
-              <div class="input-group mr-3">
+              <div class="input-group mr-3 mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text">Type</label>
                 </div>
@@ -61,7 +61,7 @@
                   {% endif %}
                 </select>
               </div>
-              <div class="input-group mr-3">
+              <div class="input-group mr-3 mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text" >Status</label>
                 </div>
@@ -84,7 +84,7 @@
                   {% endif %}
                 </select>
               </div>
-              <div class="input-group mr-3">
+              <div class="input-group mr-3 mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text">Resp. Code</label>
                 </div>
@@ -107,13 +107,13 @@
                   {% endif %}
                 </select>
               </div>
-              <div class="input-group mr-3">
+              <div class="input-group mr-3 mb-3">
                 <div class="input-group-prepend">
                   <label class="input-group-text">Domain/Url</label>
                 </div>
                 <input type="text" class="form-control" name="domain" value="{{ params.domain }}">
               </div>
-              <button type="submit" class="btn btn-primary">Filter</button>
+              <button type="submit" class="btn btn-primary mb-3">Filter</button>
             </div>
           </form>
           <table class="table table-striped table-bordered table-responsive-xl">
