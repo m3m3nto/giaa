@@ -6,7 +6,19 @@ let Account = require("../models/account");
 let indexer = require('../modules/indexer');
 let checker = require('../modules/checker');
 let utils = require('../modules/utils');
-var parse = require('url-parse')
+let parse = require('url-parse');
+let multer = require('multer');
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'tmp/')
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+let upload = multer({storage: storage});
+let fs = require('fs');
+let readline = require('readline');
 let router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -14,6 +26,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/request/:page', function(req, res, next) {
+  var dir = './tmp/';
+  if (!fs.existsSync(dir)){ fs.mkdirSync(dir); }
+  
   var perPage = 20;
   if(req.params.page == 0 || isNaN(req.params.page)){
     res.redirect('/request/1');
@@ -53,8 +68,13 @@ router.get('/request/:page', function(req, res, next) {
   });
 });
 
-router.post('/request', function(req, res, next) {
-  locations = req.body.url.split('\n').filter(Boolean);
+router.post('/request', upload.single('csv-file'), function(req, res, next) {
+  if(typeof req.file === 'undefined'){
+    locations = req.body.url.split('\n').filter(Boolean);
+  }else{
+    locations = fs.readFileSync('tmp/' + req.file.filename).toString().split("\n");
+  }
+
   locations.forEach(function(loc, index, arr){
     var loc = loc.replace(/\r?\n|\r/g, "").trim();
     var urlValidator = checker.valid_url(loc, req.body.type)

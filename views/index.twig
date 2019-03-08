@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-12 py-4">
           <p>Insert single url, or multiple urls one per line.</p>
-          <form method="post" action="/request">
+          <form method="post" action="/request" enctype="multipart/form-data">
             <div class="form-group">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -21,6 +21,18 @@
                   ]</span>
                 </div>
                 <textarea class="form-control" id="url" name="url" rows="3"></textarea>
+              </div>
+            </div>
+            <label for="igroup">Or load a txt with one url per line</label>
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text igroup">TXT file</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="csv-file">
+                  <label class="custom-file-label" for="inputGroupFile01"></label>
+                </div>
               </div>
             </div>
             <div class="form-group">
