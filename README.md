@@ -45,8 +45,7 @@ $ NODE_ENV=dev npm start
 ## Models
 - service_account
   - cif: client id file name
-  - domains: []
-  - client_email
+  - domains:
 - urls
   - location: { type: String },
   - type: { type: String },
