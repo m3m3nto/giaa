@@ -11,6 +11,7 @@ let flash = require('express-flash-2');
 let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
+let auth = require('./modules/auth');
 
 io.sockets.on("connection",function (socket) {
   socket.on("updatedUrl", function (url, callback) {
@@ -20,6 +21,7 @@ io.sockets.on("connection",function (socket) {
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');
+app.use(auth);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

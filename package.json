@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/m3m3nto/giaa#readme",
   "dependencies": {
+    "basic-auth": "^2.0.1",
     "cookie-parser": "^1.4.4",
     "cron": "^1.7.0",
     "express": "^4.16.4",
