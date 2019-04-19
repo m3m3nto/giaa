@@ -72,7 +72,7 @@ module.exports.http_check = function http_check(loc, type) {
           notifyUrl.status = 'pending';
         }else if((response.statusCode == 404 || response.statusCode == 410) && type == 'URL_UPDATED'){
           notifyUrl.response_status_code = response.statusCode;
-          notifyUrl.response_status_message = 'Requested URL_UPDATED but url returns 404';
+          notifyUrl.response_status_message = 'Requested URL_UPDATED but url returns 404/410';
           notifyUrl.status = 'error';
         }else if(response.statusCode == 301 || response.statusCode == 302){
           notifyUrl.location = response.headers.location;
