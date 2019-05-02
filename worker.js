@@ -8,6 +8,7 @@ mongoose.connect(config.database, {useNewUrlParser: true});
 let CronJob = require('cron').CronJob;
 let io = require('socket.io-client');
 var parse = require('url-parse');
+mongoose.set('useCreateIndex', true);
 
 console.log('Starting indexer service...');
 new CronJob('*/5 * * * * *', function() {

@@ -12,6 +12,7 @@ let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 let auth = require('./modules/auth');
+mongoose.set('useCreateIndex', true);
 
 io.sockets.on("connection",function (socket) {
   socket.on("updatedUrl", function (url, callback) {

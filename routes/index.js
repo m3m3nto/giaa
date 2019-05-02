@@ -20,6 +20,7 @@ let upload = multer({storage: storage});
 let fs = require('fs');
 let readline = require('readline');
 let router = express.Router();
+mongoose.set('useCreateIndex', true);
 
 router.get('/', function(req, res, next) {
   res.redirect('/request/1');
@@ -28,7 +29,7 @@ router.get('/', function(req, res, next) {
 router.get('/request/:page', function(req, res, next) {
   var dir = './tmp/';
   if (!fs.existsSync(dir)){ fs.mkdirSync(dir); }
-  
+
   var perPage = 20;
   if(req.params.page == 0 || isNaN(req.params.page)){
     res.redirect('/request/1');
