@@ -1,5 +1,19 @@
 # giaa: Google Indexing Api Automator
-Google Indexing API automator
+Google Indexing API automator provides a convenient UI to [Google Indexing API](https://developers.google.com/search/apis/indexing-api/v3/quickstart).
+Giia is an open source application based on Node.js + MongoDB; it could be used locally or it could be installed on a server.
+
+- It allows you to easily interface with the Google Indexing API and stores all the requests made.
+- It allows you to manage multiple GSC/Api account properties simultaneously and request batch indexing.
+- Automates the authorization token request process.
+
+It allows you to optimize the limit of daily requests, with preventive checks, such as:
+
+- requested url domain not configured in GSC.
+- url for a URL_UPDATED request that returns a 404/410.
+- url for a URL_REMOVED request that returns a 200.
+- wrong url.
+- redirects following.
+- storing the notification time of the request makes the urlNotifications requests redundant.
 
 ## Installation
 
@@ -62,3 +76,7 @@ $ npm start
   - notifytime: { type: Date },
   - status: { type: String },
   - updatedat: { type: Date }
+
+
+---
+Main Sponsor: [Altura Labs](http://www.alturalabs.com)
