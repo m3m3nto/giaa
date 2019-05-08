@@ -22,7 +22,6 @@
     "cookie-parser": "^1.4.4",
     "cron": "^1.7.1",
     "express": "^4.16.4",
-    "express-flash-2": "^1.0.1",
     "expressjs": "^1.0.1",
     "googleapis": "^37.2.0",
     "http": "0.0.0",

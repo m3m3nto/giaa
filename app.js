@@ -7,7 +7,6 @@ let bodyParser = require('body-parser')
 let config = require('./config/app.js');
 let indexRouter = require('./routes/index');
 let async = require('async');
-let flash = require('express-flash-2');
 let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
