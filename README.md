@@ -21,7 +21,9 @@ It allows you to optimize the limit of daily requests, with preventive checks, s
 - node installation:
   - Linux via package manager: https://nodejs.org/en/download/package-manager/
   - MacOS: https://nodejs.org/en/download/
-- mongodb installation: https://docs.mongodb.com/manual/administration/install-on-linux/
+- mongodb installation:
+  - Linux: https://docs.mongodb.com/manual/administration/install-on-linux/
+  - MacOs: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
 - npm install within project dir:
 ```sh
 $ npm install
