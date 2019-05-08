@@ -61,6 +61,6 @@ typings/
 .next
 
 # /config/cids directory
-config/cids
+config/cids/*.json
 config/client_id
 tmp/*

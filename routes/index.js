@@ -100,10 +100,9 @@ router.get('/config', function(req, res, next) {
   var dir = './' + config.cids_dir;
   var fs = require('fs');
 
-  var cids = [];
-  fs.readdirSync(dir).forEach(function(file, index, arr){
-    cids[index] = file;
-  });
+  var cids = fs.readdirSync(dir).filter(function(file) {
+    if(file.indexOf(".json")>-1) return file;
+  })
 
   var accounts = Account.find();
   accounts.exec(function(err, accounts){
