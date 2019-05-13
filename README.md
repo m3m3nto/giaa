@@ -1,5 +1,5 @@
 # giaa: Google Indexing Api Automator
-Google Indexing API automator provides a convenient UI to [Google Indexing API](https://developers.google.com/search/apis/indexing-api/v3/quickstart).
+Google Indexing API Automator provides a convenient UI to [Google Indexing API](https://developers.google.com/search/apis/indexing-api/v3/quickstart).
 Giia is an open source application based on Node.js + MongoDB; it could be used locally or it could be installed on a server.
 
 - It allows you to easily interface with the Google Indexing API and stores all the requests made.
