@@ -53,6 +53,7 @@ $ npm start
 
 ## Giaa basic configuration
 - Complete the Indexing API prerequisites: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+- At the end of the previous process you should have downloaded one or more public/private key pair file/files in .json format: copy it/them into config/cids
 - Customize config/app.js options:
   - database: mongodb connection options,
   - api_daily_quota: indexing api daily quota,
@@ -60,10 +61,9 @@ $ npm start
   - basic_auth: if true activate http basic auth with basic_auth_user and basic_auth_pass credentials,
   - basic_auth_user: http basic auth username,
   - basic_auth_pass: http basic auth password
-- Download one or more public/private key pair file/files in .json format and copy it/them into config/cids
 - Restart app
 - Go to http://localhost:3000/config
-- Pair your GSC property/ies to specific public/private key pair file:
+- Pair your GSC property/ies to your previously downloaded public/private key pair file:
 
 ![](https://raw.githubusercontent.com/m3m3nto/giaa/master/public/img/giaa.png)
 
