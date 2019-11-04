@@ -20,22 +20,22 @@
   "dependencies": {
     "basic-auth": "^2.0.1",
     "cookie-parser": "^1.4.4",
-    "cron": "^1.7.1",
+    "cron": "^1.7.2",
     "express": "^4.17.1",
     "expressjs": "^1.0.1",
     "googleapis": "^37.2.0",
     "http": "0.0.0",
-    "mongoose": "^5.6.4",
-    "mongoose-sequence": "^5.1.0",
-    "multer": "^1.4.1",
+    "mongoose": "^5.7.7",
+    "mongoose-sequence": "^5.2.2",
+    "multer": "^1.4.2",
     "request": "^2.88.0",
-    "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "twig": "^1.13.3",
     "url-parse": "^1.4.7",
     "validator": "^10.11.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.4"
   }
 }
