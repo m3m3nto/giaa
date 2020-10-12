@@ -19,7 +19,7 @@ module.exports.valid_url = function valid_url(loc, type){
     });
 
     var purl = parse(loc, true);
-    account = Account.findOne({domain: purl.protocol + '//' + purl.hostname}).exec(function (err, account) {
+    account = Account.findOne({ domain: {$regex: purl.hostname , $options: 'ig'} }).exec(function (err, account) {
       if(account){
         resolve(account.cif);
       }else{
@@ -40,7 +40,7 @@ module.exports.http_check = function http_check(loc, type) {
       method: "HEAD",
       followRedirect: false,
       headers: {
-        'User-Agent': 'request'
+        'User-Agent': 'GIAA'
       }
     }
     request(options, function (error, response, body) {
@@ -74,7 +74,7 @@ module.exports.http_check = function http_check(loc, type) {
           notifyUrl.response_status_code = response.statusCode;
           notifyUrl.response_status_message = 'Requested URL_UPDATED but url returns 404/410';
           notifyUrl.status = 'error';
-        }else if(response.statusCode == 301 || response.statusCode == 302){
+        }else if(response.statusCode == 301 || response.statusCode == 302 || response.statusCode == 307){
           notifyUrl.location = response.headers.location;
           notifyUrl.status = 'pending';
         }else{

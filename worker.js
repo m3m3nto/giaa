@@ -19,13 +19,6 @@ new CronJob('*/5 * * * * *', function() {
     }
     var remainingUrls = config.api_daily_quota - count;
 
-    function getLastPart(url) {
-      var parts = url.split("/");
-      return (url.lastIndexOf('/') !== url.length - 1
-         ? parts[parts.length - 1]
-         : parts[parts.length - 2]);
-    }
-
     if(remainingUrls > 0){
       var urls = Url.find({ 'status': 'pending' }).limit(remainingUrls);
       urls.exec(function (err, urls) {
