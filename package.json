@@ -30,7 +30,7 @@
     "mongoose-sequence": "^5.2.2",
     "multer": "^1.4.2",
     "request": "^2.88.2",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "socket.io-client": "^2.3.0",
     "twig": "^1.15.2",
     "url-parse": "^1.4.7",
