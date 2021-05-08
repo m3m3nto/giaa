@@ -37,7 +37,7 @@
     "validator": "^10.11.0",
     "node-fetch": "^2.6.1",
     "node-forge": ">=0.10.0",
-    "lodash": ">=4.17.19"
+    "lodash": ">=4.17.21"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
