@@ -31,7 +31,7 @@
     "mongoose-sequence": "^5.3.1",
     "multer": "^1.4.2",
     "node-fetch": "^2.6.1",
-    "node-forge": ">=0.10.0",
+    "node-forge": ">=1.0.0",
     "request": "^2.88.2",
     "socket.io": "^2.4.1",
     "socket.io-client": "^2.4.0",
