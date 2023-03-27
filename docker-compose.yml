@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=giaa
+    volumes:
+      - db:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  app:
+    depends_on:
+      - mongodb
+    image: giaa
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      - DB_URL=mongodb://giaa:giaa@mongodb/giaa
+    volumes:
+      - ./cids:/app/config/cids
+
+volumes:
+  db:
