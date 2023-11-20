@@ -19,7 +19,7 @@ module.exports.valid_url = function valid_url(loc, type){
     });
 
     var purl = parse(loc, true);
-    account = Account.findOne({ domain: {$regex: purl.hostname , $options: 'ig'} }).exec(function (err, account) {
+    account = Account.findOne({ domain: {$regex: purl.hostname , $options: 'i'} }).exec(function (err, account) {
       if(account){
         resolve(account.cif);
       }else{

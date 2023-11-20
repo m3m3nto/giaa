@@ -27,7 +27,7 @@ new CronJob('*/5 * * * * *', function() {
           console.log('Notifying url: ' + url.location);
           var purl = parse(url.location, true);
           try{
-            account = Account.findOne({ domain: {$regex: purl.hostname , $options: 'ig'} }).exec(function (err, account) {
+            account = Account.findOne({ domain: {$regex: purl.hostname , $options: 'i'} }).exec(function (err, account) {
               if(account){
                 var initializeIndexer = indexer.notify(url.location, url.type, account.cif);
                 initializeIndexer.then(function(urlDetails) {
