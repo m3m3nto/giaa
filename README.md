@@ -29,6 +29,45 @@ It allows you to optimize the limit of daily requests, with preventive checks, s
 $ npm install
 ```
 
+#### Docker Compose
+
+You can use docker compose config below to start the app with mongodb
+
+<details>
+  <summary>docker-compose.yaml example</summary>
+  
+  ```yaml
+  version: "3.8"
+
+  services:
+    app:
+      image: ghcr.io/m3m3nto/giaa:latest
+      depends_on:
+        - mongodb
+      restart: unless-stopped
+      ports:
+        - 3000:3000
+      environment:
+        - DB_URL=mongodb://giaa:giaa@mongodb/giaa
+      volumes:
+        - ./cids:/app/config/cids
+
+    mongodb:
+      image: mongo:5.0.2
+      restart: unless-stopped
+      environment:
+        - MONGO_INITDB_ROOT_USERNAME=admin
+        - MONGO_INITDB_ROOT_PASSWORD=admin
+        - MONGO_INITDB_DATABASE=giaa
+      volumes:
+        - db:/data/db
+        - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  volumes:
+    db:
+  ```
+</details>
+
 #### Windows
 - node installation: https://nodejs.org/en/download/
 - mongodb installation: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#install-mdb-edition
@@ -43,6 +82,12 @@ $ npm install
 Within project dir:
 ```sh
 $ npm start
+```
+
+#### Docker Compose
+Within docker-compose.yaml dir:
+```sh
+$ docker compose up
 ```
 
 #### Windows
